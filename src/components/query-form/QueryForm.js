@@ -3,57 +3,50 @@
  * @exports JSX.Element
  */
 
-import React, { useState } from "react";
-
 import PropTypes from "prop-types";
 import QueryTextInput from "./query-text-input/QueryTextInput";
+import React from "react";
 import SubmitButton from "./submit-button/SubmitButton";
-import { useDataApi } from "../../hooks/useDataApi";
 
 /**
  * @function Renders input for querying data
  * @name QueryForm
  */
-export default function QueryForm() {
-  const [value, setValue] = useState(`great beer`);
-  const searchParam = value.replace(/ /g, "_");
-  const url = new URL(
-    `https://api.punkapi.com/v2/beers?beer_name=${searchParam}`
-  );
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(url.href, {
-    hits: [],
-  });
-
+export default function QueryForm({ url, param, setParam, doFetch }) {
   return (
     <form
       onSubmit={(e) => {
         /** execute new data fetch */
-        doFetch(url.href);
+        doFetch(url);
 
         /** prevent browser from refreshing on submit */
         e.preventDefault();
       }}
     >
-      <QueryTextInput value={value} setValue={setValue} />
+      <QueryTextInput value={param} setValue={setParam} />
       <SubmitButton text="Search" />
     </form>
   );
 }
 
 QueryForm.propTypes = {
-  /** query value for url slug */
+  /** Object parsed from URL string */
+  url: PropTypes.string.isRequired,
+  /** Current search parameter */
+  param: PropTypes.string,
+  /** A function to set param state */
+  setParam: PropTypes.func,
+  /** @listens Function listens for form change to refetch API */
+  doFetch: PropTypes.func.isRequired,
+  /** Used to pass param state to input element */
   value: PropTypes.string,
-  /** set state of query value for url slug */
+  /** A function to collect the input text for value state. */
   setValue: PropTypes.func,
   /** Parse search value to URL search param
    * #### examples
    * / /g,"_"     - replace all spaces with underscore
    */
-  searchParam: PropTypes.string.isRequired,
-  /** Object parsed from URL string */
-  url: PropTypes.object.isRequired,
-  /** @listens Function listens for form change to refetch API */
-  doFetch: PropTypes.func.isRequired,
+  searchParam: PropTypes.string,
   /** Render input for query */
   QueryTextInput: PropTypes.elementType,
   /** Render submit button for query */

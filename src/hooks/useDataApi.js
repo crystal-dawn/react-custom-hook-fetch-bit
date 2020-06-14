@@ -54,7 +54,6 @@ fetchApiDataReducer.propTypes = {
  * @function Custom fetch hook
  */
 export const useDataApi = (initialUrl, initialData) => {
-  initialUrl.replace(/ /g,"_")
   // set url state programmatically
   const [url, setUrl] = useState(new URL(initialUrl));
 
@@ -120,10 +119,10 @@ const fetchData = async (didCancel, url, dispatch) => {
   try {
     const result = await fetch(url);
 
-    const data = await result.json();
+    const resultData = await result.json();
     // abort data fetching
     if (!didCancel) {
-      dispatch({ type: "FETCH_SUCCESS", payload: data });
+      dispatch({ type: "FETCH_SUCCESS", payload: resultData });
     }
   } catch (error) {
     // abort data fetching

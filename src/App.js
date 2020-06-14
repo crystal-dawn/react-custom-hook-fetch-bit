@@ -1,9 +1,9 @@
-import Query from './components/query-form/QueryForm'
 import React from 'react';
+import SearchPage from './components/search-page/SearchPage'
 
 function App() {
   return (
-    <Query />
+    <SearchPage />
   );
 }
 

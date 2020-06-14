@@ -89,8 +89,7 @@ fetchApiDataReducer.propTypes = {
  */
 
 var useDataApi = function useDataApi(initialUrl, initialData) {
-  initialUrl.replace(/ /g, "_"); // set url state programmatically
-
+  // set url state programmatically
   var _useState = (0, _react.useState)(new URL(initialUrl)),
       _useState2 = _slicedToArray(_useState, 2),
       url = _useState2[0],
@@ -170,7 +169,7 @@ useDataApi.propTypes = {
 
 var fetchData = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(didCancel, url, dispatch) {
-    var result, data;
+    var result, resultData;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -189,13 +188,13 @@ var fetchData = /*#__PURE__*/function () {
             return result.json();
 
           case 7:
-            data = _context.sent;
+            resultData = _context.sent;
 
             // abort data fetching
             if (!didCancel) {
               dispatch({
                 type: "FETCH_SUCCESS",
-                payload: data
+                payload: resultData
               });
             }
 
