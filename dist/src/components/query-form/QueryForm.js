@@ -15,6 +15,8 @@ var _QueryTextInput = _interopRequireDefault(require("./query-text-input/QueryTe
 
 var _SubmitButton = _interopRequireDefault(require("./submit-button/SubmitButton"));
 
+var _useDataApi3 = require("../../hooks/useDataApi");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -41,12 +43,33 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
  */
 function QueryForm() {
-  var _useState = (0, _react.useState)("redux"),
+  var _useState = (0, _react.useState)("great beer"),
       _useState2 = _slicedToArray(_useState, 2),
       value = _useState2[0],
       setValue = _useState2[1];
 
-  return /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement(_QueryTextInput.default, {
+  var searchParam = value.replace(/ /g, "_");
+  var url = new URL("https://api.punkapi.com/v2/beers?beer_name=".concat(searchParam));
+
+  var _useDataApi = (0, _useDataApi3.useDataApi)(url.href, {
+    hits: []
+  }),
+      _useDataApi2 = _slicedToArray(_useDataApi, 2),
+      _useDataApi2$ = _useDataApi2[0],
+      data = _useDataApi2$.data,
+      isLoading = _useDataApi2$.isLoading,
+      isError = _useDataApi2$.isError,
+      doFetch = _useDataApi2[1];
+
+  return /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: function onSubmit(e) {
+      /** execute new data fetch */
+      doFetch(url.href);
+      /** prevent browser from refreshing on submit */
+
+      e.preventDefault();
+    }
+  }, /*#__PURE__*/_react.default.createElement(_QueryTextInput.default, {
     value: value,
     setValue: setValue
   }), /*#__PURE__*/_react.default.createElement(_SubmitButton.default, {
@@ -56,13 +79,31 @@ function QueryForm() {
 
 QueryForm.propTypes = {
   /** query value for url slug */
-  query: _propTypes.default.string,
+  value: _propTypes.default.string,
 
   /** set state of query value for url slug */
-  setQuery: _propTypes.default.func,
+  setValue: _propTypes.default.func,
+
+  /** Parse search value to URL search param
+
+   * #### examples
+
+   * / /g,"_"     - replace all spaces with underscore
+
+   */
+  searchParam: _propTypes.default.string.isRequired,
+
+  /** Object parsed from URL string */
+  url: _propTypes.default.object.isRequired,
+
+  /** @listens Function listens for form change to refetch API */
+  doFetch: _propTypes.default.func.isRequired,
 
   /** Render input for query */
-  QueryTextInput: _propTypes.default.elementType
+  QueryTextInput: _propTypes.default.elementType,
+
+  /** Render submit button for query */
+  SubmitButton: _propTypes.default.elementType
 };
 
 //# sourceMappingURL=QueryForm.js.map

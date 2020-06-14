@@ -53,11 +53,12 @@ fetchApiDataReducer.propTypes = {
 /**
  * @function Custom fetch hook
  */
-export default useDataApi = (initialUrl, initialData) => {
+export const useDataApi = (initialUrl, initialData) => {
+  initialUrl.replace(/ /g,"_")
   // set url state programmatically
-  const [url, setUrl] = useState(initialUrl);
+  const [url, setUrl] = useState(new URL(initialUrl));
 
-  const [state, dispatch] = useReducer(dataFetchReducer, {
+  const [state, dispatch] = useReducer(fetchApiDataReducer, {
     // loading state indicator
     isLoading: false,
     // error handling state
@@ -71,7 +72,7 @@ export default useDataApi = (initialUrl, initialData) => {
     // abort data fetching
     let didCancel = false;
 
-    fetchData();
+    fetchData(didCancel, url, dispatch);
     // use cleanup to not perform state transition for unmounted component
     return () => (didCancel = true);
 
@@ -101,13 +102,18 @@ useDataApi.propTypes = {
   isError: PropTypes.bool,
   /** @return API data object */
   data: PropTypes.object.isRequired,
+  /** Boolean to not perform state transition for unmounted component
+   * ### example<hr>
+   * ```return () => (didCancel = true);```
+   */
+  didCancel: PropTypes.bool,
 };
 
 /**
  * Function to fetch data
  * @async
  */
-export const fetchData = async () => {
+const fetchData = async (didCancel, url, dispatch) => {
   dispatch({ type: "FETCH_INIT" });
 
   // wrap in try/catch block for error handling
@@ -142,7 +148,7 @@ fetchData.propTypes = {
   data: PropTypes.object.isRequired,
   /** Returns a promise that resolves with the result of parsing the body text as JSON. */
   json: PropTypes.func.isRequired,
-  /** Boolean for aborting */
+  /** Boolean to not perform state transition for unmounted component */
   didCancel: PropTypes.bool,
   /** Send data to update state of application data */
   payload: PropTypes.object,
