@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.Loading = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -19,12 +19,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Loading = function Loading() {
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "loadingStatus"
-  }, "Loading:"), /*#__PURE__*/_react.default.createElement("progress", {
+  }, "Loading..."), /*#__PURE__*/_react.default.createElement("progress", {
     id: "loadingStatus"
   }));
 };
 
-var _default = Loading;
-exports.default = _default;
+exports.Loading = Loading;
 
 //# sourceMappingURL=Loading.js.map

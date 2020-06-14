@@ -9,7 +9,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Loading = _interopRequireDefault(require("../loading/Loading"));
+var _ErrorMessage = require("../error-message/ErrorMessage");
+
+var _Loading = require("../loading/Loading");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -44,14 +46,15 @@ function SearchPage() {
       setParam = _useState2[1];
 
   var searchParam = param.replace(/ /g, "_");
-  var url = new URL("https://api.punkapi.com/v2/beers?beer_name=".concat(searchParam)).href;
+  var url = new URL("https://api.punkapi.com/2/beers?beer_name=".concat(searchParam)).href;
 
   var _useDataApi = (0, _useDataApi3.useDataApi)(url),
       _useDataApi2 = _slicedToArray(_useDataApi, 2),
       _useDataApi2$ = _useDataApi2[0],
-      data = _useDataApi2$.data,
       isLoading = _useDataApi2$.isLoading,
       isError = _useDataApi2$.isError,
+      data = _useDataApi2$.data,
+      error = _useDataApi2$.error,
       doFetch = _useDataApi2[1];
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_QueryForm.default, {
@@ -59,9 +62,11 @@ function SearchPage() {
     param: param,
     setParam: setParam,
     doFetch: doFetch
-  }), !isLoading && data !== undefined ? /*#__PURE__*/_react.default.createElement(_Results.default, {
+  }), isError ? /*#__PURE__*/_react.default.createElement(_ErrorMessage.ErrorMessage, {
+    error: error
+  }) : !isLoading && data !== undefined ? /*#__PURE__*/_react.default.createElement(_Results.default, {
     data: data
-  }) : /*#__PURE__*/_react.default.createElement(_Loading.default, null));
+  }) : /*#__PURE__*/_react.default.createElement(_Loading.Loading, null));
 }
 
 var _default = SearchPage;
@@ -88,13 +93,20 @@ SearchPage.propTypes = {
   /** Data fetched from API */
   data: _propTypes.default.object,
 
+  /** String of error message for displaying in error message */
+  error: _propTypes.default.string,
+
   /** Boolean that toggles **is loading** element during fetch */
+  isLoading: _propTypes.default.bool,
 
   /** Boolean that toggles **error** element  */
   isError: _propTypes.default.bool,
 
   /** @listens Function listens for form change to refetch API */
   doFetch: _propTypes.default.func,
+
+  /** Render error message if failed */
+  ErrorMessage: _propTypes.default.elementType,
 
   /** Render input for query */
   QueryTextInput: _propTypes.default.elementType,

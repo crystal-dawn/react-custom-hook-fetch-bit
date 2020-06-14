@@ -57,7 +57,8 @@ var fetchApiDataReducer = function fetchApiDataReducer(state, action) {
     case "FETCH_FAILURE":
       return _objectSpread({}, state, {
         isLoading: false,
-        isError: true
+        isError: true,
+        error: action.payload
       });
 
     default:
@@ -89,19 +90,16 @@ fetchApiDataReducer.propTypes = {
  */
 
 var useDataApi = function useDataApi(initialUrl, initialData) {
-  // set url state programmatically
   var _useState = (0, _react.useState)(new URL(initialUrl)),
       _useState2 = _slicedToArray(_useState, 2),
       url = _useState2[0],
       setUrl = _useState2[1];
 
   var _useReducer = (0, _react.useReducer)(fetchApiDataReducer, {
-    // loading state indicator
     isLoading: false,
-    // error handling state
     isError: false,
-    // generic initial state set in hook call
-    data: initialData
+    data: initialData,
+    error: ""
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
@@ -168,8 +166,8 @@ useDataApi.propTypes = {
  */
 
 var fetchData = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(didCancel, url, dispatch) {
-    var result, resultData;
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(didCancel, url, dispatch, action) {
+    var result, resultData, errorMessage;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -198,21 +196,23 @@ var fetchData = /*#__PURE__*/function () {
               });
             }
 
-            _context.next = 14;
+            _context.next = 15;
             break;
 
           case 11:
             _context.prev = 11;
             _context.t0 = _context["catch"](1);
-
             // abort data fetching
+            errorMessage = _context.t0.toString();
+
             if (!didCancel) {
               dispatch({
-                type: "FETCH_FAILURE"
+                type: "FETCH_FAILURE",
+                payload: errorMessage
               });
             }
 
-          case 14:
+          case 15:
           case "end":
             return _context.stop();
         }
@@ -220,7 +220,7 @@ var fetchData = /*#__PURE__*/function () {
     }, _callee, null, [[1, 11]]);
   }));
 
-  return function fetchData(_x, _x2, _x3) {
+  return function fetchData(_x, _x2, _x3, _x4) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -243,6 +243,9 @@ fetchData.propTypes = {
 
   /** @return API data object */
   data: _propTypes.default.object.isRequired,
+
+  /** String of error message for displaying in error message */
+  error: _propTypes.default.string,
 
   /** Returns a promise that resolves with the result of parsing the body text as JSON. */
   json: _propTypes.default.func.isRequired,

@@ -5,7 +5,8 @@
 
 import React, { useState } from "react";
 
-import Loading from "../loading/Loading";
+import { ErrorMessage } from "../error-message/ErrorMessage";
+import { Loading } from "../loading/Loading";
 import PropTypes from "prop-types";
 import QueryForm from "../query-form/QueryForm";
 import Results from "../results/Results";
@@ -15,9 +16,9 @@ function SearchPage() {
   const [param, setParam] = useState(`Lager`);
   const searchParam = param.replace(/ /g, "_");
   const url = new URL(
-    `https://api.punkapi.com/v2/beers?beer_name=${searchParam}`
+    `https://api.punkapi.com/2/beers?beer_name=${searchParam}`
   ).href;
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(url);
+  const [{ isLoading, isError, data, error }, doFetch] = useDataApi(url);
 
   return (
     <>
@@ -27,7 +28,13 @@ function SearchPage() {
         setParam={setParam}
         doFetch={doFetch}
       />
-      {!isLoading && data !== undefined ? <Results data={data} /> : <Loading />}
+      {isError ? (
+        <ErrorMessage error={error} />
+      ) : !isLoading && data !== undefined ? (
+        <Results data={data} />
+      ) : (
+        <Loading />
+      )}
     </>
   );
 }
@@ -48,11 +55,16 @@ SearchPage.propTypes = {
   url: PropTypes.object,
   /** Data fetched from API */
   data: PropTypes.object,
+  /** String of error message for displaying in error message */
+  error: PropTypes.string,
   /** Boolean that toggles **is loading** element during fetch */
+  isLoading: PropTypes.bool,
   /** Boolean that toggles **error** element  */
   isError: PropTypes.bool,
   /** @listens Function listens for form change to refetch API */
   doFetch: PropTypes.func,
+  /** Render error message if failed */
+  ErrorMessage: PropTypes.elementType,
   /** Render input for query */
   QueryTextInput: PropTypes.elementType,
   /** Render submit button for query */

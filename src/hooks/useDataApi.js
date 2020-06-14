@@ -31,6 +31,7 @@ export const fetchApiDataReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true,
+        error: action.payload,
       };
     default:
       throw new Error();
@@ -54,16 +55,13 @@ fetchApiDataReducer.propTypes = {
  * @function Custom fetch hook
  */
 export const useDataApi = (initialUrl, initialData) => {
-  // set url state programmatically
   const [url, setUrl] = useState(new URL(initialUrl));
 
   const [state, dispatch] = useReducer(fetchApiDataReducer, {
-    // loading state indicator
     isLoading: false,
-    // error handling state
     isError: false,
-    // generic initial state set in hook call
     data: initialData,
+    error: "",
   });
 
   // effect hook for data fetching
@@ -112,7 +110,7 @@ useDataApi.propTypes = {
  * Function to fetch data
  * @async
  */
-const fetchData = async (didCancel, url, dispatch) => {
+const fetchData = async (didCancel, url, dispatch, action) => {
   dispatch({ type: "FETCH_INIT" });
 
   // wrap in try/catch block for error handling
@@ -126,8 +124,9 @@ const fetchData = async (didCancel, url, dispatch) => {
     }
   } catch (error) {
     // abort data fetching
+    const errorMessage = error.toString();
     if (!didCancel) {
-      dispatch({ type: "FETCH_FAILURE" });
+      dispatch({ type: "FETCH_FAILURE", payload: errorMessage });
     }
   }
 };
@@ -145,6 +144,8 @@ fetchData.propTypes = {
   url: PropTypes.string.isRequired,
   /** @return API data object */
   data: PropTypes.object.isRequired,
+  /** String of error message for displaying in error message */
+  error: PropTypes.string,
   /** Returns a promise that resolves with the result of parsing the body text as JSON. */
   json: PropTypes.func.isRequired,
   /** Boolean to not perform state transition for unmounted component */
