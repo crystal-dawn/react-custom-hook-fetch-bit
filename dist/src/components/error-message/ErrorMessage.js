@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ErrorMessage = void 0;
+exports.default = void 0;
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -13,12 +13,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ErrorMessage = function ErrorMessage(_ref) {
   var error = _ref.error;
-  return /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement("h1", null, error), /*#__PURE__*/_react.default.createElement("p", null, "This is likely caused by the API url in the fetch request."));
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, console.log(error), /*#__PURE__*/_react.default.createElement("section", null, /*#__PURE__*/_react.default.createElement("h1", null, error), /*#__PURE__*/_react.default.createElement("p", null, "This is likely caused by a problem with the API fetch URL")));
 };
 
-exports.ErrorMessage = ErrorMessage;
+var _default = ErrorMessage;
+exports.default = _default;
 ErrorMessage.propTypes = {
-  /** Error message */
   error: _propTypes.default.string.isRequired
 };
 

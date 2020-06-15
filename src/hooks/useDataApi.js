@@ -37,7 +37,6 @@ export const fetchApiDataReducer = (state, action) => {
       throw new Error();
   }
 };
-
 fetchApiDataReducer.propTypes = {
   /** @enum { data, isLoading, isError } */
   state: PropTypes.string.isRequired,

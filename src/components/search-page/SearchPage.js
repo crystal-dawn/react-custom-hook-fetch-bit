@@ -5,7 +5,8 @@
 
 import React, { useState } from "react";
 
-import { ErrorMessage } from "../error-message/ErrorMessage";
+import ErrorMessage from "../error-message/ErrorMessage";
+import FilterDropdown from "../filter-dropdown/FilterDropdown";
 import { Loading } from "../loading/Loading";
 import PropTypes from "prop-types";
 import QueryForm from "../query-form/QueryForm";
@@ -16,7 +17,7 @@ function SearchPage() {
   const [param, setParam] = useState(`Lager`);
   const searchParam = param.replace(/ /g, "_");
   const url = new URL(
-    `https://api.punkapi.com/2/beers?beer_name=${searchParam}`
+    `https://api.punkapi.com/v2/beers?beer_name=${searchParam}`
   ).href;
   const [{ isLoading, isError, data, error }, doFetch] = useDataApi(url);
 
@@ -31,7 +32,10 @@ function SearchPage() {
       {isError ? (
         <ErrorMessage error={error} />
       ) : !isLoading && data !== undefined ? (
-        <Results data={data} />
+        <>
+          <Results data={data} />
+          <FilterDropdown data={data} />
+        </>
       ) : (
         <Loading />
       )}
@@ -69,4 +73,6 @@ SearchPage.propTypes = {
   QueryTextInput: PropTypes.elementType,
   /** Render submit button for query */
   SubmitButton: PropTypes.elementType,
+  /** Render dropdown box with keys from first level of data */
+  FilterDropdown: PropTypes.elementType,
 };

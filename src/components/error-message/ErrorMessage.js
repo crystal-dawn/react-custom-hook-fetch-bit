@@ -1,14 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-export const ErrorMessage = ({ error }) => (
-  <section>
-    <h1>{error}</h1>
-    <p>This is likely caused by the API url in the fetch request.</p>
-  </section>
+const ErrorMessage = ({ error }) => (
+  <>
+    {console.log(error)}
+    <section>
+      <h1>{error}</h1>
+      <p>This is likely caused by a problem with the API fetch URL</p>
+    </section>
+  </>
 );
 
+export default ErrorMessage;
+
 ErrorMessage.propTypes = {
-  /** Error message */
   error: PropTypes.string.isRequired,
 };

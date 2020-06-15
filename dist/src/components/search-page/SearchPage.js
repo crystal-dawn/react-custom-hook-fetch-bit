@@ -9,7 +9,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _ErrorMessage = require("../error-message/ErrorMessage");
+var _ErrorMessage = _interopRequireDefault(require("../error-message/ErrorMessage"));
+
+var _FilterDropdown = _interopRequireDefault(require("../filter-dropdown/FilterDropdown"));
 
 var _Loading = require("../loading/Loading");
 
@@ -46,7 +48,7 @@ function SearchPage() {
       setParam = _useState2[1];
 
   var searchParam = param.replace(/ /g, "_");
-  var url = new URL("https://api.punkapi.com/2/beers?beer_name=".concat(searchParam)).href;
+  var url = new URL("https://api.punkapi.com/v2/beers?beer_name=".concat(searchParam)).href;
 
   var _useDataApi = (0, _useDataApi3.useDataApi)(url),
       _useDataApi2 = _slicedToArray(_useDataApi, 2),
@@ -62,11 +64,13 @@ function SearchPage() {
     param: param,
     setParam: setParam,
     doFetch: doFetch
-  }), isError ? /*#__PURE__*/_react.default.createElement(_ErrorMessage.ErrorMessage, {
+  }), isError ? /*#__PURE__*/_react.default.createElement(_ErrorMessage.default, {
     error: error
-  }) : !isLoading && data !== undefined ? /*#__PURE__*/_react.default.createElement(_Results.default, {
+  }) : !isLoading && data !== undefined ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Results.default, {
     data: data
-  }) : /*#__PURE__*/_react.default.createElement(_Loading.Loading, null));
+  }), /*#__PURE__*/_react.default.createElement(_FilterDropdown.default, {
+    data: data
+  })) : /*#__PURE__*/_react.default.createElement(_Loading.Loading, null));
 }
 
 var _default = SearchPage;
@@ -112,7 +116,10 @@ SearchPage.propTypes = {
   QueryTextInput: _propTypes.default.elementType,
 
   /** Render submit button for query */
-  SubmitButton: _propTypes.default.elementType
+  SubmitButton: _propTypes.default.elementType,
+
+  /** Render dropdown box with keys from first level of data */
+  FilterDropdown: _propTypes.default.elementType
 };
 
 //# sourceMappingURL=SearchPage.js.map
