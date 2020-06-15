@@ -37,11 +37,11 @@ function QueryForm(_ref) {
       doFetch = _ref.doFetch;
   return /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: function onSubmit(e) {
-      /** execute new data fetch */
-      doFetch(url);
       /** prevent browser from refreshing on submit */
-
       e.preventDefault();
+      /** execute new data fetch */
+
+      doFetch(url);
     }
   }, /*#__PURE__*/_react.default.createElement(_QueryTextInput.default, {
     value: param,

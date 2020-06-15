@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /**
 
- * A React component that renders a text input with a default value.
+ * @file A React component that renders a text input with a default value.
 
  * @interface
 
@@ -50,12 +50,16 @@ QueryTextInput.propTypes = {
   /** Placeholder text for the input element. */
   value: _propTypes.default.string.isRequired,
 
-  /** A function to collect the query text. */
+  /** A function to collect the query text. 
+
+   * @default 
+
+  */
   setValue: _propTypes.default.func.isRequired,
 
   /** A function to update state.
 
-   * #### Example <hr>
+   * #### example <hr>
 
    * ```onChange={(event) => setValue(event.target.value)}```
 

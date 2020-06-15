@@ -49,7 +49,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "seewhycy.custom-react-fetch-hook/query-form@1.0.16": {
+    "seewhycy.custom-react-fetch-hook/query-form@1.0.21": {
         "files": [
             {
                 "relativePath": "src/components/query-form/QueryForm.js",
@@ -61,7 +61,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "seewhycy.custom-react-fetch-hook/query-text-input@1.0.15": {
+    "seewhycy.custom-react-fetch-hook/query-text-input@1.0.21": {
         "files": [
             {
                 "relativePath": "src/components/query-form/query-text-input/QueryTextInput.js",
@@ -73,7 +73,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "seewhycy.custom-react-fetch-hook/results@1.0.16": {
+    "seewhycy.custom-react-fetch-hook/results@1.0.21": {
         "files": [
             {
                 "relativePath": "src/components/results/Results.js",
@@ -85,7 +85,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "seewhycy.custom-react-fetch-hook/search-page@1.0.20": {
+    "seewhycy.custom-react-fetch-hook/search-page@1.0.21": {
         "files": [
             {
                 "relativePath": "src/components/search-page/SearchPage.js",
@@ -109,7 +109,7 @@
         "origin": "AUTHORED",
         "exported": true
     },
-    "seewhycy.custom-react-fetch-hook/use-data-api@1.0.20": {
+    "seewhycy.custom-react-fetch-hook/use-data-api@1.0.21": {
         "files": [
             {
                 "relativePath": "src/hooks/useDataApi.js",

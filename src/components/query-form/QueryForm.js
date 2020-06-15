@@ -16,11 +16,10 @@ export default function QueryForm({ url, param, setParam, doFetch }) {
   return (
     <form
       onSubmit={(e) => {
-        /** execute new data fetch */
-        doFetch(url);
-
         /** prevent browser from refreshing on submit */
         e.preventDefault();
+        /** execute new data fetch */
+        doFetch(url);
       }}
     >
       <QueryTextInput value={param} setValue={setParam} />

@@ -1,5 +1,5 @@
 /**
- * A React component that renders a text input with a default value.
+ * @file A React component that renders a text input with a default value.
  * @interface
  * @exports JSX.Element
  */
@@ -26,10 +26,12 @@ export default QueryTextInput;
 QueryTextInput.propTypes = {
   /** Placeholder text for the input element. */
   value: PropTypes.string.isRequired,
-  /** A function to collect the query text. */
+  /** A function to collect the query text. 
+   * @default 
+  */
   setValue: PropTypes.func.isRequired,
   /** A function to update state.
-   * #### Example <hr>
+   * #### example <hr>
    * ```onChange={(event) => setValue(event.target.value)}```
    */
   onChange: PropTypes.func,
