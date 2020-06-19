@@ -1,10 +1,9 @@
-import React from 'react';
-import SearchPage from './components/search-page/SearchPage'
+import React from "react";
+import SearchPage from "./components/search-page/SearchPage";
 
 function App() {
-  return (
-    <SearchPage />
-  );
+  const apiKey = process.env.REACT_APP_API_KEY;
+  return <SearchPage />;
 }
 
 export default App;

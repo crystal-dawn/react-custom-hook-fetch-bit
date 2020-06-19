@@ -9,7 +9,7 @@ function Results({ data }) {
     <ol>
       {/* map data from fetch request */}
       {data
-        .filter((item) => item.ingredients.malt[0].name !== filterArg)
+        // .filter((item) => item.ingredients.malt[0].name !== filterArg)
         .map((item, id) => (
           <ListItem key={item.id} item={item.name} />
         ))}

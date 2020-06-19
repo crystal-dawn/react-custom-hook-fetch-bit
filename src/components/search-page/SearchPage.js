@@ -15,10 +15,11 @@ import Results from "../results/Results";
 import { useDataApi } from "../../hooks/useDataApi";
 
 function SearchPage() {
-  const [param, setParam] = useState(`Lager`);
-  const searchParam = param.replace(/ /g, "_");
+  const [param, setParam] = useState(`apple`);
+  const mwApiKey = `${process.env.REACT_APP_MW_API_KEY}`
+  // const searchParam = param.replace(/ /g, "_");
   const url = new URL(
-    `https://api.punkapi.com/v2/beers?beer_name=${searchParam}`
+    `https://www.dictionaryapi.com/api/v3/references/learners/json/${param}?key=${mwApiKey}`
   ).href;
   const [{ isLoading, isError, data, error }, doFetch] = useDataApi(url);
 
