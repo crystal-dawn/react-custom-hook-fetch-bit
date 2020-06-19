@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import React from "react";
 
 function Results({ data }) {
-  const filterArg = `Pale Ale`;
+  const filterArg = undefined;
+  let audio =  data.find((entry) => entry.hwi.prs[0].sound.audio !== undefined)
 
   return (
     <ol>
       {/* map data from fetch request */}
-      {data
-        // .filter((item) => item.ingredients.malt[0].name !== filterArg)
-        .map((item, id) => (
-          <ListItem key={item.id} item={item.name} />
-        ))}
+        <ListItem key={audio} 
+         item={audio.hwi.prs[0].sound.audio} 
+         />
+        
     </ol>
   );
 }
